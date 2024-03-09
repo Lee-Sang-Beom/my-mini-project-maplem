@@ -2,7 +2,7 @@
 "use client";
 
 import { CacheProvider } from "@chakra-ui/next-js";
-import { ChakraProvider } from "@chakra-ui/react/dist";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export function NewChakraProviders({
   children,

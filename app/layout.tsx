@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import AuthSessionProvider from "./AuthSessionProvider";
 import { NewChakraProviders } from "./providers";
 import "./globals.css";
+import Header from "@/component/Header/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -61,9 +62,14 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${Godo.variable} ${pretendard.variable}`}>
-        <AuthSessionProvider>
-          <NewChakraProviders>{children}</NewChakraProviders>
-        </AuthSessionProvider>
+        <div id="page_wrap">
+          <AuthSessionProvider>
+            <NewChakraProviders>
+              <Header />
+              {children}
+            </NewChakraProviders>
+          </AuthSessionProvider>
+        </div>
       </body>
     </html>
   );

@@ -82,6 +82,16 @@
   --main-line-contents-area-5: #ffffff;
 }
 
+body {
+  font-family: var(--font-pretendard) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.page_wrap{
+  width: 100%;
+}
+
 .screen_out {
   position: absolute;
   width: 1px;
@@ -94,11 +104,6 @@
           clip-path: polygon(0 0, 0 0, 0 0); /* inset(50%) 와 동일한 표현 */
   border: 0;
 }
-
-body {
-  font-family: var(--font-godo);
-}
-
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
