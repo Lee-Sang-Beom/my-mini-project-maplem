@@ -4,6 +4,7 @@ import AuthSessionProvider from "./AuthSessionProvider";
 import { NewChakraProviders } from "./providers";
 import "./globals.css";
 import Header from "@/component/Header/Header";
+import Main from "@/component/Main/Main";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -66,7 +67,7 @@ export default function RootLayout({
           <AuthSessionProvider>
             <NewChakraProviders>
               <Header />
-              {children}
+              <Main>{children}</Main>
             </NewChakraProviders>
           </AuthSessionProvider>
         </div>

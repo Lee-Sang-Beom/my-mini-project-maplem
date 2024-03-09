@@ -27,7 +27,11 @@ const MenuItem = React.forwardRef(
         ref={ref}
         {...props}
       >
-        <Link href={menu.href} prefetch={false}>
+        <Link
+          href={menu.href}
+          prefetch={false}
+          target={menu.target ? "_blank" : "_self"}
+        >
           <button
             title="메뉴 이동"
             className={styles.tab_button}
@@ -40,16 +44,18 @@ const MenuItem = React.forwardRef(
             tabIndex={-1}
           >
             <p
-              className={
-                onHover || isCurrentVisit
-                  ? styles.active_tab_text
-                  : styles.unactive_tab_text
-              }
+              className={`${isCurrentVisit && styles.equal_url_tab_text} ${
+                onHover
+                  ? styles.hover_active_tab_text
+                  : styles.hover_unactive_tab_text
+              }`}
             >
               {menu.name}
             </p>
             <p
-              className={onHover || isCurrentVisit ? styles.tab_bottom_box : ""}
+              className={`${
+                isCurrentVisit && styles.equal_url_tab_bottom_box
+              } ${onHover ? styles.hover_tab_bottom_box : ""}`}
             ></p>
           </button>
         </Link>

@@ -1,10 +1,12 @@
 .menu_box {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  gap: 50px;
   height: 100%;
+  gap: 50px;
+
 }
 
 .tablist {
@@ -25,27 +27,51 @@
   padding: 1rem;
 
   font-weight: 600;
-  font-size: 18px;
 
-  // 활성화된 메뉴 텍스트
-  .active_tab_text {
+
+  // 호버로 활성화된 메뉴 텍스트 관리
+  .hover_active_tab_text {
     color: var(--main-hover-accent);
+    transition: font-size 0.2s ease !important;
+
+    &:hover{
+      font-size: 18px;
+    }
   }
-  .unactive_tab_text {
-    color: #000000;
+  .hover_unactive_tab_text {
+    color: #fff;
   }
 
   // 활성화된 메뉴 텍스트 아래의 Bottom Line 스타일
-  .tab_bottom_box {
+  .hover_tab_bottom_box, 
+  .equal_url_tab_bottom_box {
     position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
+    transform: translateX(50%);
+    left: -50%;
     top: 100%;
     height: 5px;
     width: 100%;
+    border-radius: 8px 8px 0 0;
+    transition: transform 0.2s ease-in;
+        
+   
+  }
+  .hover_tab_bottom_box {
     background-color: var(--main-hover-accent);
     border: 1px solid var(--main-hover-accent);
-    border-radius: 8px 8px 0 0;
+  }
+
+  // URL 경로 일치로 활성화된 메뉴 텍스트
+  .equal_url_tab_text{
+    color: var(--turquoise01);
 
   }
+
+  .equal_url_tab_bottom_box {
+    background-color: var(--turquoise01);
+    border: 1px solid var(--turquoise01);
+  }
+  
+
+
 }
