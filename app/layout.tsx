@@ -66,7 +66,6 @@ export default function RootLayout({
         <div id="page_wrap">
           <AuthSessionProvider>
             <NewChakraProviders>
-              <Header />
               <Main>{children}</Main>
             </NewChakraProviders>
           </AuthSessionProvider>

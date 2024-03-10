@@ -118,7 +118,118 @@ export default async function Home() {
       <p>캐릭터 성별: {character_gender}</p>
       <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
       <p>현재 레벨: {character_level}</p>
-
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
+      <p>전투력: {step4Data.stat[0].stat_value}</p>
+      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
+      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
+      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
+      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
+      <p>HP: {step4Data.stat[5].stat_value}</p>
+      <p>MP: {step4Data.stat[6].stat_value}</p>
+      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
+      <p>월드명: {world_name}</p>
+      <p>캐릭터 생성일: {character_date_create}</p>
+      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
+      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
+      <p>직업명: {character_job_name}</p>
+      <p>캐릭터 성별: {character_gender}</p>
+      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
+      <p>현재 레벨: {character_level}</p>
       <p>전투력: {step4Data.stat[0].stat_value}</p>
       <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
       <p>마법 공격력: {step4Data.stat[2].stat_value}</p>

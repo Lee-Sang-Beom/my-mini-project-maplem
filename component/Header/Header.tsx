@@ -1,7 +1,4 @@
-"use client";
-
 import styles from "./Header.module.scss";
-import React, { useState } from "react";
 import Link from "next/link";
 import Avatar from "../common/Avatar/Avatar";
 import NavBar from "../NavBar/NavBar";
@@ -14,11 +11,15 @@ import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { MdOutlineEventNote } from "react-icons/md";
+import React from "react";
 
 const Header = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+  React.HTMLAttributes<HTMLDivElement> & {
+    isHeaderDisplay: boolean;
+    setIsHeaderDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+>(({ className, isHeaderDisplay, setIsHeaderDisplay, ...props }, ref) => {
   /**
    * @avatarStyle : 로고 이미지에 필요한 스타일 부여
    */
@@ -59,8 +60,6 @@ const Header = React.forwardRef<
     },
   ];
 
-  const [isHeaderDisplay, setIsHeaderDisplay] = useState<boolean>(true);
-
   return (
     <>
       {/* 헤더는 펼쳤을 때 200px를, 닫혔을 때 30px 영역을 차지한다. */}
@@ -80,6 +79,7 @@ const Header = React.forwardRef<
                 className={`${styles.close_btn_box}`}
                 title="닫기버튼"
                 onClick={() => {
+                  console.log("whtat? ");
                   setIsHeaderDisplay(false);
                 }}
               >
