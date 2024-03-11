@@ -128,9 +128,5 @@ export default async function Home() {
   console.log("step3Data is ", step3Data);
   console.log("step4Data is ", step4Data);
   console.log("step5Data is ", step5Data);
-  return (
-    <div>
-      <p>캐릭터명: {character_name}</p>
-    </div>
-  );
+  return <div></div>;
 }
