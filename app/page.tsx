@@ -1,33 +1,30 @@
-import { serverSideFetch } from "@/utils/serverSideFetch";
-import { makeHostUrl } from "@/utils/utils";
+import { serverSideMapleFetch } from "@/utils/serverSideMapleFetch";
+import { makeHostUrl, makeUrlQuery } from "@/utils/utils";
 import { headers } from "next/headers";
 
 // 캐릭터 고유 ID 조회
-async function getMapleStoryMOcid(character_name: string, world_name: string) {
-  const res = await fetch(
+async function getMapleStoryMOcid(queryInstance: any) {
+  const res = await serverSideMapleFetch(
     process.env.NEXT_PUBLIC_MAPLE_HOST +
-      `/maplestorym/v1/id?character_name=${character_name}&world_name=${world_name}`,
+      `/maplestorym/v1/id?${makeUrlQuery(queryInstance)}`,
     {
-      headers: {
-        "x-nxopen-api-key": process.env.NEXT_PUBLIC_MAPLE_SECRET,
-      },
+      cache: "no-store",
     }
   )
     .then((res) => res.json())
     .catch((err) => console.log(err));
 
+  console.log("res is ", res);
   return res;
 }
 
 // 캐릭터 기본정보 조회
-async function getMapleStoryMCharacterBasicInfo(ocid: string) {
-  const res = await fetch(
+async function getMapleStoryMCharacterBasicInfo(queryInstance: any) {
+  const res = await serverSideMapleFetch(
     process.env.NEXT_PUBLIC_MAPLE_HOST +
-      `/maplestorym/v1/character/basic?ocid=${ocid}`,
+      `/maplestorym/v1/character/basic?${makeUrlQuery(queryInstance)}`,
     {
-      headers: {
-        "x-nxopen-api-key": process.env.NEXT_PUBLIC_MAPLE_SECRET,
-      },
+      cache: "no-store",
     }
   )
     .then((res) => res.json())
@@ -37,14 +34,12 @@ async function getMapleStoryMCharacterBasicInfo(ocid: string) {
 }
 
 // 장착 아이템 정보 조회
-async function getMapleStoryMCharacterItemEquipmentInfo(ocid: string) {
-  const res = await fetch(
+async function getMapleStoryMCharacterItemEquipmentInfo(queryInstance: any) {
+  const res = await serverSideMapleFetch(
     process.env.NEXT_PUBLIC_MAPLE_HOST +
-      `/maplestorym/v1/character/item-equipment?ocid=${ocid}`,
+      `/maplestorym/v1/character/item-equipment?${makeUrlQuery(queryInstance)}`,
     {
-      headers: {
-        "x-nxopen-api-key": process.env.NEXT_PUBLIC_MAPLE_SECRET,
-      },
+      cache: "no-store",
     }
   )
     .then((res) => res.json())
@@ -54,14 +49,12 @@ async function getMapleStoryMCharacterItemEquipmentInfo(ocid: string) {
 }
 
 // 스탯 정보 조회
-async function getMapleStoryMCharacterStatInfo(ocid: string) {
-  const res = await fetch(
+async function getMapleStoryMCharacterStatInfo(queryInstance: any) {
+  const res = await serverSideMapleFetch(
     process.env.NEXT_PUBLIC_MAPLE_HOST +
-      `/maplestorym/v1/character/stat?ocid=${ocid}`,
+      `/maplestorym/v1/character/stat?${makeUrlQuery(queryInstance)}`,
     {
-      headers: {
-        "x-nxopen-api-key": process.env.NEXT_PUBLIC_MAPLE_SECRET,
-      },
+      cache: "no-store",
     }
   )
     .then((res) => res.json())
@@ -71,14 +64,12 @@ async function getMapleStoryMCharacterStatInfo(ocid: string) {
 }
 
 // 길드 정보 조회
-async function getMapleStoryMCharacterGuildInfo(ocid: string) {
-  const res = await fetch(
+async function getMapleStoryMCharacterGuildInfo(queryInstance: any) {
+  const res = await serverSideMapleFetch(
     process.env.NEXT_PUBLIC_MAPLE_HOST +
-      `/maplestorym/v1/character/guild?ocid=${ocid}`,
+      `/maplestorym/v1/character/guild?${makeUrlQuery(queryInstance)}`,
     {
-      headers: {
-        "x-nxopen-api-key": process.env.NEXT_PUBLIC_MAPLE_SECRET,
-      },
+      cache: "no-store",
     }
   )
     .then((res) => res.json())
@@ -87,27 +78,20 @@ async function getMapleStoryMCharacterGuildInfo(ocid: string) {
   return res;
 }
 
-async function getCrisisMsgSearchType() {
-  const headersInstance = headers();
-  const hostUrl = makeHostUrl(headersInstance);
-
-  const res = await serverSideFetch(
-    hostUrl + `/api/emergency/getEmgrMsgSearchType`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
 export default async function Home() {
-  const { ocid } = await getMapleStoryMOcid("아크", "아케인");
+  // 1. get ocid query instance
+  const getOcidQueryInstance = {
+    character_name: "아크",
+    world_name: "아케인",
+  };
+
+  const { ocid } = await getMapleStoryMOcid(getOcidQueryInstance);
   if (!ocid) return <div>유저 고유 아이디 정보를 불러오지 못했습니다.</div>;
+
+  // get characterBasic info query instance
+  const getCharacterInfoInstance = {
+    ocid: ocid,
+  };
 
   const {
     character_name,
@@ -119,12 +103,18 @@ export default async function Home() {
     character_gender,
     character_exp,
     character_level,
-  } = await getMapleStoryMCharacterBasicInfo(ocid);
+  } = await getMapleStoryMCharacterBasicInfo(getCharacterInfoInstance);
   if (!character_name) return <div>유저 정보를 불러오지 못했습니다.</div>;
 
-  const step3Data = await getMapleStoryMCharacterItemEquipmentInfo(ocid);
-  const step4Data = await getMapleStoryMCharacterStatInfo(ocid);
-  const step5Data = await getMapleStoryMCharacterGuildInfo(ocid);
+  const step3Data = await getMapleStoryMCharacterItemEquipmentInfo(
+    getCharacterInfoInstance
+  );
+  const step4Data = await getMapleStoryMCharacterStatInfo(
+    getCharacterInfoInstance
+  );
+  const step5Data = await getMapleStoryMCharacterGuildInfo(
+    getCharacterInfoInstance
+  );
 
   console.log("step3Data is ", step3Data);
   console.log("step4Data is ", step4Data);
@@ -132,134 +122,6 @@ export default async function Home() {
   return (
     <div>
       <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p> <p>캐릭터명: {character_name}</p>
-      <p>월드명: {world_name}</p>
-      <p>캐릭터 생성일: {character_date_create}</p>
-      <p>캐릭터 로그인 시간:{character_date_last_login}</p>
-      <p>캐릭터 로그아웃 시간: {character_date_last_logout}</p>
-      <p>직업명: {character_job_name}</p>
-      <p>캐릭터 성별: {character_gender}</p>
-      <p>현재 보유 경험치: {character_exp.toLocaleString()}</p>
-      <p>현재 레벨: {character_level}</p>
-      <p>전투력: {step4Data.stat[0].stat_value}</p>
-      <p>물리 공격력: {step4Data.stat[1].stat_value}</p>
-      <p>마법 공격력: {step4Data.stat[2].stat_value}</p>
-      <p>물리 방어력: {step4Data.stat[3].stat_value}</p>
-      <p>마법 방어력: {step4Data.stat[4].stat_value}</p>
-      <p>HP: {step4Data.stat[5].stat_value}</p>
-      <p>MP: {step4Data.stat[6].stat_value}</p>
-      <p>소속 길드: {step5Data.guild_name}</p>
     </div>
   );
 }
