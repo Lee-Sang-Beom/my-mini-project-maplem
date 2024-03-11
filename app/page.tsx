@@ -12,9 +12,10 @@ async function getMapleStoryMOcid(queryInstance: any) {
     }
   )
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error("데이터 불러오기 중 오류가 발생했습니다.");
+    });
 
-  console.log("res is ", res);
   return res;
 }
 
@@ -28,7 +29,9 @@ async function getMapleStoryMCharacterBasicInfo(queryInstance: any) {
     }
   )
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error("데이터 불러오기 중 오류가 발생했습니다.");
+    });
 
   return res;
 }
@@ -43,7 +46,9 @@ async function getMapleStoryMCharacterItemEquipmentInfo(queryInstance: any) {
     }
   )
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error("데이터 불러오기 중 오류가 발생했습니다.");
+    });
 
   return res;
 }
@@ -58,7 +63,9 @@ async function getMapleStoryMCharacterStatInfo(queryInstance: any) {
     }
   )
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error("데이터 불러오기 중 오류가 발생했습니다.");
+    });
 
   return res;
 }
@@ -73,7 +80,9 @@ async function getMapleStoryMCharacterGuildInfo(queryInstance: any) {
     }
   )
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error("데이터 불러오기 중 오류가 발생했습니다.");
+    });
 
   return res;
 }
