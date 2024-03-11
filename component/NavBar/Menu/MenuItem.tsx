@@ -8,11 +8,13 @@ import styles from "./Menu.module.scss";
 
 interface ExtendLIProps extends React.HTMLAttributes<HTMLLIElement> {
   menu: MenuType;
+  setIsHeaderDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  isMobile: boolean;
 }
 
 const MenuItem = React.forwardRef(
   (
-    { menu, className, ...props }: ExtendLIProps,
+    { menu, setIsHeaderDisplay, isMobile, className, ...props }: ExtendLIProps,
     ref: React.Ref<HTMLLIElement>
   ) => {
     const currentPathName = usePathname();
@@ -31,6 +33,11 @@ const MenuItem = React.forwardRef(
           href={menu.href}
           prefetch={false}
           target={menu.target ? "_blank" : "_self"}
+          onClick={() => {
+            if (isMobile) {
+              setIsHeaderDisplay(false);
+            }
+          }}
         >
           <button
             title="메뉴 이동"

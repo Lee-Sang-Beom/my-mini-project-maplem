@@ -5,11 +5,19 @@ import React from "react";
 
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
   menuList: MenuType[];
+  setIsHeaderDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  isMobile: boolean;
 }
 
 const NavBar = React.forwardRef(
   (
-    { menuList, className, ...props }: NavBarProps,
+    {
+      menuList,
+      setIsHeaderDisplay,
+      isMobile,
+      className,
+      ...props
+    }: NavBarProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
     return (
@@ -20,6 +28,8 @@ const NavBar = React.forwardRef(
               <MenuItem
                 key={menu.seq}
                 menu={menu}
+                setIsHeaderDisplay={setIsHeaderDisplay}
+                isMobile={isMobile}
                 style={{
                   width: "auto",
                 }}

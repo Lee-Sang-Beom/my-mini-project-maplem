@@ -14,10 +14,12 @@
     transition: all 0.2s ease;
 
     overflow-y: scroll;
+    width: calc(100% - 30px);
+
     &.open {
       width: calc(100% - 200px);
     }
-    &.close {
+    &.mobile_screen {
       width: calc(100% - 30px);
     }
   }
@@ -25,7 +27,7 @@
     position: absolute;
     bottom: 0;
 
-    width: 100%;
+    width: calc(100% - 30px);
     height: 70px;
     transition: all 0.2s ease;
 
@@ -38,7 +40,7 @@
     &.open {
       width: calc(100% - 200px);
     }
-    &.close {
+    &.mobile_screen {
       width: calc(100% - 30px);
     }
   }
