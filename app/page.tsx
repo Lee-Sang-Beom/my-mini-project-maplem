@@ -1,3 +1,7 @@
+import { serverSideFetch } from "@/utils/serverSideFetch";
+import { makeHostUrl } from "@/utils/utils";
+import { headers } from "next/headers";
+
 // 캐릭터 고유 ID 조회
 async function getMapleStoryMOcid(character_name: string, world_name: string) {
   const res = await fetch(
@@ -81,6 +85,24 @@ async function getMapleStoryMCharacterGuildInfo(ocid: string) {
     .catch((err) => console.log(err));
 
   return res;
+}
+
+async function getCrisisMsgSearchType() {
+  const headersInstance = headers();
+  const hostUrl = makeHostUrl(headersInstance);
+
+  const res = await serverSideFetch(
+    hostUrl + `/api/emergency/getEmgrMsgSearchType`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
 }
 
 export default async function Home() {

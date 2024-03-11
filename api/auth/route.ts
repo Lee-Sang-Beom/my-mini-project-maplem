@@ -1,7 +1,7 @@
-export const dynamic = 'auto'; // todo
+export const dynamic = "auto"; // todo
 
-import { authOptions } from '@/lib/auth';
-import NextAuth from 'next-auth';
+import { authOptions } from "@/lib/auth";
+import NextAuth from "next-auth";
 
 const handler = NextAuth(authOptions);
 

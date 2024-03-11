@@ -1,109 +1,63 @@
-import { AuthOptions, User } from "next-auth";
+import { AuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import KakaoProvider from "next-auth/providers/kakao";
-import axios from "axios";
-//import { LoginSocialForm } from "@/type/commonType";
+import { AdapterUser } from "next-auth/adapters";
+import { JWT } from "next-auth/jwt";
 
 export const authOptions: AuthOptions = {
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-  pages: {
-    signIn: "/login",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
-      type: "credentials",
+      name: "Normal",
       credentials: {
-        userId: {
-          label: "UserId",
-          type: "userId",
-        },
-        userPw: {
-          label: "Password",
-          type: "password",
-        },
+        userId: { label: "userId", type: "text" },
+        userPw: { label: "userPw", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(
+        credentials: Record<"userId" | "userPw", string> | undefined
+      ) {
         if (credentials) {
           const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
             method: "POST",
             body: JSON.stringify(credentials),
           });
-          const resJson = await res.json();
-          if (resJson.status === 200) {
-            return resJson.data;
+          const json = await res.json();
+          if (json.status === 200) {
+            return json.data;
           } else {
-            throw new Error(JSON.stringify(resJson));
+            throw new Error(JSON.stringify(json));
           }
         } else {
           alert("plz check crediental");
         }
       },
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
-    }),
-    KakaoProvider({
-      clientId: process.env.KAKAO_CLIENT_ID as string,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
-    }),
   ],
+  // 인증 프로세스 중 다양한 시점에서 호출되는 함수
   callbacks: {
-    signIn: async ({ account, profile, user }) => {
-      if (account?.provider === "kakao" || account?.provider === "google") {
-        if (user) {
-          // const sendData: LoginSocialForm = {
-          const sendData: any = {
-            platformKey: user.id,
-            socialId: user.email as string,
-            socialPlatform: account.provider,
-            userName: user.name as string,
-          };
-          const { data: loginData } = await axios.post(
-            `${process.env.BACKEND_URL}/backapi/security/login/social`,
-            sendData
-          );
-
-          
-          return true;
-        }
-      }
-      return true;
-    },
-    // redirect: async ({ url, baseUrl }) => {
-    //   if (url.startsWith("/")) {
-    //     console.log("startWith");
-    //     return `${baseUrl}${url}`;
-    //   } else if (new URL(url).origin === baseUrl) return url;
-    //   return baseUrl;
-    // },
-    jwt: async ({ token, user }) => {
+    // 서버한테서 로그인하고 get,post 하려면 로그인 시 token 받음
+    async jwt({ token, user }: { token: JWT; user: User | AdapterUser }) {
+      // authorize 메서드에서 반환된 사용자 객체 (로그인 시에만 제공됩니다)
       if (user) {
         token.user = user;
-        // token.userId = user.userId;
-        // token.userName =user.userName;
       }
       return token;
     },
-    session: async ({ session, token, user }) => {
-      if (token && session.user) {
-        session.user = token.user as User;
-        // session.user.userId = token.userId;
-        // session.user.userName= token.userName;
-      }
+    // JWT (JSON Web Token)의 생성과 검증을 사용자 정의하고 조작할 수 있게 합니다.
+    async session({ session, token }: { session: Session; token: JWT }) {
+      session.user = token.user;
       return session;
     },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      if (!url.includes("http")) {
+        return "http://localhost:3000" + url;
+      }
+      return url;
+    },
+  },
+  pages: {
+    signIn: "/",
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30days
   },
 };
